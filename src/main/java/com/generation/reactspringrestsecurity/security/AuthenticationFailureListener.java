@@ -7,14 +7,25 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ *
+ */
 @Component
 public class AuthenticationFailureListener implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
 
     @Autowired
     private HttpServletRequest request;
 
-    @Override
-    public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent authenticationFailureBadCredentialsEvent) {
+    @Autowired
+    private LoginAttemptService loginAttemptService;
 
+    @Override
+    public void onApplicationEvent(final AuthenticationFailureBadCredentialsEvent e) {
+        final String xfHeader = request.getHeader("x-Forwarded-For");
+        if (xfHeader == null) {
+            loginAttemptService.loginFailed(request.getRemoteAddr());
+        } else {
+            loginAttemptService.loginFailed(xfHeader.split(",")[0]);
+        }
     }
 }

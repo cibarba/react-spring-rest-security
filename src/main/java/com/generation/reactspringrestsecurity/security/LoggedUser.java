@@ -15,6 +15,11 @@ public class LoggedUser implements HttpSessionBindingListener {
     public LoggedUser() {
     }
 
+    public LoggedUser(String username, ActiveUserStore activeUserStore) {
+        this.username = username;
+        this.activeUserStore = activeUserStore;
+    }
+
     @Override
     public void valueBound(HttpSessionBindingEvent httpSessionBindingEvent) {
         List<String> users = activeUserStore.getUsers();

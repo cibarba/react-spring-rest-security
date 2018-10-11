@@ -3,6 +3,9 @@ package com.generation.reactspringrestsecurity.security;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Storage users who was active on the application
+ */
 public class ActiveUserStore {
 
     public List<String> users;

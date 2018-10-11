@@ -13,7 +13,7 @@ public interface PasswordResetTokenRepository extends CrudRepository<PasswordRes
 
     PasswordResetToken findByToken(String token);
 
-    PasswordResetToken findAllByUser(User user);
+    PasswordResetToken findByUser(User user);
 
     Stream<PasswordResetToken> findAllByExpiryDateLessThan(Date now);
 
@@ -21,5 +21,5 @@ public interface PasswordResetTokenRepository extends CrudRepository<PasswordRes
 
     @Modifying
     @Query("delete from PasswordResetToken t where t.expiryDate <= ?1")
-    void deleteAllByExpiredSince(Date now);
+    void deleteAllExpiredSince(Date now);
 }
